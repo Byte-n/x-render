@@ -45,7 +45,7 @@ export default Demo;
 ```
 
 ## 保留某一个
-```jsx
+```tsx
 /**
  * transform: true
  * defaultShowCode: true
@@ -81,7 +81,7 @@ export default Demo;
 
 ## 按钮不保留
 
-```jsx
+```tsx
 /**
  * transform: true
  * defaultShowCode: true

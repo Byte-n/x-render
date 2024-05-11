@@ -3,7 +3,7 @@ import { Form } from 'antd-mobile';
 
 import { _get } from '../../utils';
 import { FRContext } from '../../models/context';
-import { isHasExpression, parseAllExpression } from 'form-render/es/models/expression';
+import { isHasExpression, parseAllExpression } from '../../../../form-render/es/models/expression';
 import { getDependValues } from './module';
 import Main from './main';
 
@@ -39,19 +39,19 @@ export default (props: any) => {
           formDependencies.push(item);
           return getDependValues(formData, depPath, props, item);
         });
-        
+
         const newSchema =  parseAllExpression(schema, formData, rootPath, formSchema);
 
         return (
-          <Main 
+          <Main
             schema={{
               ...newSchema,
               dependencies: formDependencies
-            }} 
-            rootPath={rootPath} 
+            }}
+            rootPath={rootPath}
             {...otherProps}
-            dependValues={dependValues} 
-            store={store} 
+            dependValues={dependValues}
+            store={store}
           />
         );
       }}

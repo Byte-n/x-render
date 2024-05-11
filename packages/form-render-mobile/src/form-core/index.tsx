@@ -3,9 +3,9 @@ import { Form, Grid } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
 import { cloneDeep } from 'lodash-es';
-import { parseValuesToBind } from 'form-render/es/models/bindValues';
-import filterValuesUndefined from 'form-render/es/models/filterValuesUndefined';
-import filterValuesHidden from 'form-render/es/models/filterValuesHidden';
+import { parseValuesToBind } from '../../../form-render/es/models/bindValues';
+import filterValuesUndefined from '../../../form-render/es/models/filterValuesUndefined';
+import filterValuesHidden from '../../../form-render/es/models/filterValuesHidden';
 
 import { valueRemoveUndefined, _cloneDeep, isFunction } from '../utils';
 import { FRContext } from '../models/context';
@@ -18,7 +18,7 @@ import {
   msToTime,
   getSessionItem,
   setSessionItem
-} from 'form-render/es/models/formCoreUtils';
+} from '../../../form-render/es/models/formCoreUtils';
 import RenderCore from '../render-core';
 
 import './index.less';
@@ -117,7 +117,7 @@ const FormCore = (props: any) => {
     if (!isFunction(logOnSubmit)) {
       return;
     }
-   
+
     const start = getSessionItem('FORM_START');
     const mount = getSessionItem('FORM_MOUNT_TIME');
 

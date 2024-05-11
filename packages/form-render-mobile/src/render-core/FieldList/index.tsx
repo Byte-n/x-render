@@ -3,7 +3,7 @@ import { Form, Grid } from 'antd-mobile';
 import { AddCircleOutline } from 'antd-mobile-icons';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
-import { parseAllExpression } from 'form-render/es/models/expression';
+import { parseAllExpression } from '../../../../form-render/es/models/expression';
 import { isFunction } from '../../utils';
 import './index.less';
 
@@ -31,7 +31,7 @@ export default (props: any) => {
 
   const defaultValue = schema.default ?? (schema.defaultValue || [{}]);
   const { onAdd, onRemove } = schema.props || {};
-  
+
   const handleAdd = (add: any, data?: any) => {
     let addFunc = onAdd;
     if (typeof onAdd === 'string') {
@@ -62,14 +62,14 @@ export default (props: any) => {
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   const readOnly = getValueFromKey('readOnly');
-  
+
   if (schema.hidden) {
     return null;
   }
 
   const preRootPath = [...(_rootPath  || [])].splice(0, _rootPath.length - 1);
   const rootPath = [...preRootPath, ...path];
-  
+
   return (
     <Grid.Item className="frm-list">
       <Form.Array

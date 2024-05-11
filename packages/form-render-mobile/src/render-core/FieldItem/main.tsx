@@ -5,10 +5,10 @@ import classnames from 'classnames';
 
 import { _get, getWidget } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import getRuleList from 'form-render/es/models/validates';
+import getRuleList from '../../../../form-render/es/models/validates';
 import FieldWrapper from './field';
-import { 
-  getParamValue, 
+import {
+  getParamValue,
   getFieldProps,
   getPath,
   getLabel,
@@ -36,7 +36,7 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  
+
   const { form, widgets, methods, globalProps }: any = configCtx;
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, layout, ...otherSchema } = schema;
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
@@ -50,7 +50,7 @@ export default (props: any) => {
       setNeedOnClick(true);
     }
   }, [fieldRef.current]);
-  
+
 
   let Widget = getWidget(widgets, schema.widget, schema)
 
@@ -78,7 +78,7 @@ export default (props: any) => {
         {children}
       </Grid>
     );
-    
+
     return (
       <UpperContext.Provider
         value={{
@@ -91,11 +91,11 @@ export default (props: any) => {
           exist: true,
         }}
       >
-        <Widget 
-          labelWidth={labelWidth} 
-          displayType={schema.displayType} 
-          {...fieldProps} 
-          {...otherSchema} 
+        <Widget
+          labelWidth={labelWidth}
+          displayType={schema.displayType}
+          {...fieldProps}
+          {...otherSchema}
         />
       </UpperContext.Provider>
     );

@@ -44,7 +44,7 @@ export default Demo;
 
 
 ## 默认展开
-```jsx
+```tsx
 /**
  * transform: true
  * defaultShowCode: true

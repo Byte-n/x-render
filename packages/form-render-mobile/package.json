@@ -65,7 +65,7 @@
     "virtualizedtableforantd4": "^1.1.2",
     "zustand": "^4.1.5",
     "ahooks": "3.7.5",
-    "form-render": "^2.3.6"
+    "form-render": "2.4.4"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

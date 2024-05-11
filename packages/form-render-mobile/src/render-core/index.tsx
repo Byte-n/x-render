@@ -1,7 +1,7 @@
 import React from 'react';
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
-import sortProperties from 'form-render/es/models/sortProperties';
+import sortProperties from '../../../form-render/es/models/sortProperties';
 interface RenderCoreProps {
   schema: any;
   rootPath?: any[] | undefined;
@@ -58,7 +58,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
   if (!schema || Object.keys(schema).length === 0) {
     return null;
   }
- 
+
   // render List.item
   if (schema?.items) {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
@@ -67,7 +67,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
   // render Objiect | field
   return sortProperties(Object.entries(schema.properties || {})).map(([key, item]) => {
     const path = [...parentPath, key];
-   
+
     return renderItem({ schema: item, path, key, rootPath });
   });
 }

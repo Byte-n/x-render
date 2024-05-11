@@ -14,7 +14,7 @@ group:
 复制：通过配置 `copyable`
 省略：通过配置 `ellipsis`
 
-```jsx
+```tsx
 /**
  * transform: true
  * defaultShowCode: true

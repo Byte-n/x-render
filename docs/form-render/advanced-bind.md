@@ -22,10 +22,10 @@ group:
 `点击提交按钮，浏览器控制台会打印出提交的数据`
 ## 简单
 `{ date: ['2023-04-01', '2023-04-23'] }` => `{ startDate: '2023-04-01', endDate: '2023-04-23' }`
-```jsx
+```tsx
 import React from 'react';
 import { Button, Alert} from 'antd';
-import FormRender, { useForm } from 'form-render';
+import FormRender, { useForm } from 'form-render'; 
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -73,7 +73,7 @@ export default Demo;
 ## 进阶
 - 对象嵌套情况， bind 要写绝对路径
 - List 组件嵌套情况，bind 路径从 List 嵌套的子节点开始写
-```jsx
+```tsx
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -148,7 +148,7 @@ export default Demo;
 ## bind:false
 某些字段数据只做纯展示，使用 bind: false 可避免字段在提交时出现。
 
-```jsx
+```tsx
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -207,7 +207,7 @@ export default Demo;
 解决 List 嵌套，数组元素的数据格式只能是对象的问题
 
 
-```jsx
+```tsx
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';

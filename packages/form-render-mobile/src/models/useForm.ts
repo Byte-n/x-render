@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { Form } from 'antd-mobile';
 import { isMatch, cloneDeep } from 'lodash-es';
 
-import { transformFieldsData, getSchemaFullPath } from 'form-render/es/models/formCoreUtils';
-import { parseBindToValues, parseValuesToBind } from 'form-render/es/models/bindValues';
-import { flattenSchema as flatten } from 'form-render/es/models/flattenSchema';
-import filterValuesUndefined from 'form-render/es/models/filterValuesUndefined';
-import filterValuesHidden from 'form-render/es/models/filterValuesHidden';
+import { transformFieldsData, getSchemaFullPath } from '../../../form-render/es/models/formCoreUtils';
+import { parseBindToValues, parseValuesToBind } from '../../../form-render/es/models/bindValues';
+import { flattenSchema as flatten } from '../../../form-render/es/models/flattenSchema';
+import filterValuesUndefined from '../../../form-render/es/models/filterValuesUndefined';
+import filterValuesHidden from '../../../form-render/es/models/filterValuesHidden';
 import { _set, _get, _has, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined, hasFuncProperty } from '../utils';
 
 import type { FormInstance } from '../type';
@@ -27,7 +27,7 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
       ...newSchema.props
     }
   }
-  
+
   _set(formSchema, path, result);
 };
 
@@ -66,7 +66,7 @@ const getFieldName = (_path: any): any => {
     }
     return item;
   });
- 
+
   return result;
 };
 
@@ -77,8 +77,8 @@ const useForm = () => {
   const schemaRef = useRef({});
   const fieldRefs = useRef({});
 
-  const { 
-    getFieldError, 
+  const {
+    getFieldError,
     getFieldsError,
     setFields,
     isFieldsTouched,
@@ -88,7 +88,7 @@ const useForm = () => {
     validateFields,
     ...otherForm
   } = form;
-  
+
   const xform: any = otherForm;
 
 
@@ -204,7 +204,7 @@ const useForm = () => {
   xform.removeErrorField = (path: any) => {
     setFields([{ name: getFieldName(path), errors: [] }]);
   };
-  
+
   // 获取对应字段名的错误信息
   xform.getFieldError = (path: string) => {
     const name = getFieldName(path);
@@ -216,7 +216,7 @@ const useForm = () => {
     const name = getFieldName(path);
     return getFieldsError(name);
   }
-  
+
   // 获取隐藏字段数据
   xform.getHiddenValues = () => {
     const values = xform.getValues();
@@ -315,7 +315,7 @@ const useForm = () => {
   xform.getFieldRef = (path: string) => {
     return fieldRefs.current[path];
   }
- 
+
   return xform;
 };
 
