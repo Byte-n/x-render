@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { getWidgetName } from '../src/form-render-core/src/mapping';
+import { getWidgetName } from '../src/models/mapping';
 import { getArray, getFormat, isUrl } from '../src/utils';
 
 describe('Test Utils', () => {
@@ -33,6 +33,6 @@ describe('Test Utils', () => {
         type: 'string',
         format: 'date',
       })
-    ).toEqual('date');
+    ).toEqual('datePicker');
   });
 });

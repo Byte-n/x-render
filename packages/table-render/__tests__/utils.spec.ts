@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { getDate, getDateTime, getMoneyType, isObj } from '../src/utils';
+import { getDate, getDateTime, getMoneyType, isObject } from '../src/utils';
 
 describe('Test TableRender valueType', () => {
   test('Test getDate', () => {
@@ -14,15 +14,15 @@ describe('Test TableRender valueType', () => {
     expect(getMoneyType(10000)).toEqual('¥10,000');
   });
   test('Test isObj object', () => {
-    expect(isObj({})).toBeTruthy();
+    expect(isObject({})).toBeTruthy();
   });
   test('Test isObj array', () => {
-    expect(isObj([])).toBeFalsy();
+    expect(isObject([])).toBeFalsy();
   });
   test('Test isObj string', () => {
-    expect(isObj('')).toBeFalsy();
+    expect(isObject('')).toBeFalsy();
   });
   test('Test isObj number', () => {
-    expect(isObj('')).toBeFalsy();
+    expect(isObject('')).toBeFalsy();
   });
 });
