@@ -1,22 +1,23 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext } from '../../models/context';
 import { parseAllExpression } from '../../models/expression';
 import { getFormListLayout, getParamValue, getLabel, getTooltip } from './modules';
 import Main from './field';
+import { getFieldProps, getPath } from '../FieldItem/module';
 
 const UpperContext = createContext(() => {});
 
 export default (props: any) => {
   const [_, setListData] = useState([]);
-  const { configContext } = props;
-  
+  const { configContext, dependValues, rootPath } = props;
+
   const store: any = useContext(FRContext);
-  
+
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const { form, widgets, methods, globalConfig } = configContext;
+  const { form, widgets, methods, globalConfig, globalProps } = configContext;
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
@@ -30,13 +31,28 @@ export default (props: any) => {
     items,
     ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
   };
-  
+
   const { widget } = schema;
   let widgetName = widget || 'list1';
 
+  const fieldRef: any = useRef();
+  useEffect(() => {
+    form.setFieldRef(fieldProps.addons.dataPath, fieldRef);
+  }, []);
+  const fieldProps = getFieldProps(widgetName, schema, {
+    widgets,
+    methods,
+    form,
+    dependValues,
+    globalProps,
+    path: getPath(props.path),
+    rootPath,
+    fieldRef
+  });
+
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
- 
-  const label = getLabel(schema, displayType, widgets);
+
+  const label = getLabel(schema, displayType, widgets, fieldProps.addons);
   const tooltip = getTooltip(schema, displayType);
   const { labelCol, fieldCol } = getFormListLayout(getValueFromKey, displayType);
 
@@ -66,7 +82,7 @@ export default (props: any) => {
         </Form.Item>
       )}
       <Form.Item
-        label={label} 
+        label={label}
         labelCol={isDisplayColumn ? { span: 24 } : labelCol}
         wrapperCol={fieldCol}
         noStyle={!isInline && !isDisplayColumn}
@@ -74,6 +90,7 @@ export default (props: any) => {
       >
         <Main
           {...props}
+          addons={fieldProps.addons}
           form={form}
           methods={methods}
           formCtx={formCtx}

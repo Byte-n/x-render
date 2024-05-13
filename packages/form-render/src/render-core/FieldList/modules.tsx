@@ -35,12 +35,13 @@ export const getFormListLayout = (getValueFromKey: any, displayType: string) => 
   return { labelCol, fieldCol };
 };
 
-export const getLabel = (schema: any, displayType: string, widgets: any) => {
+/** listLabel */
+export const getLabel = (schema: any, displayType: string, widgets: any, addons: any) => {
   const { title, description, descWidget, labelWidget } = schema;
   const LabelNode = widgets[labelWidget];
 
   if (LabelNode) {
-    return <LabelNode schema={schema} />
+    return <LabelNode schema={schema} addons={addons}/>;
   }
 
   if ((!description && !descWidget)) {

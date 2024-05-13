@@ -21,8 +21,8 @@ import {
   FieldWrapperStatus
 } from './field';
 
-import { 
-  getParamValue, 
+import {
+  getParamValue,
   getFieldProps,
   getPath,
   getLabel,
@@ -41,7 +41,7 @@ export default (props: any) => {
   const { form, widgets, methods, globalProps } = configCtx;
   const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  
+
   const widgetName = getWidgetName(schema);
   let Widget = getWidget(widgetName, widgets);
 
@@ -71,7 +71,7 @@ export default (props: any) => {
   }
 
   if (schema.type === 'void') {
-    return ( 
+    return (
       <Col span={24}>
         <Widget {...fieldProps } />
       </Col>
@@ -108,6 +108,10 @@ export default (props: any) => {
     fieldProps.children = childElement;
     const content = <Widget labelWidth={labelWidth} displayType={schema.displayType} {...fieldProps} {...otherSchema} />;
 
+    const { labelWidget } = schema;
+    const LabelNode = widgets[labelWidget];
+    // ContainerLabel
+    const label = LabelNode && <LabelNode schema={schema} addons={fieldProps.addons} />;
     return (
       <UpperContext.Provider
         value={{
@@ -120,6 +124,7 @@ export default (props: any) => {
           exist: true,
         }}
       >
+        {label}
         {inlineSelf ? content : <Col span={24} className={classnames('fr-obj-col', { [schema.className] : !!schema.className })}>{content}</Col>}
       </UpperContext.Provider>
     );
@@ -168,7 +173,7 @@ export default (props: any) => {
     label = null;
     if (displayType === 'row') {
       label = 'fr-hide-label';
-    } 
+    }
   }
 
   const initialValue = schema.default ?? schema.defaultValue;
@@ -193,7 +198,7 @@ export default (props: any) => {
       validateTrigger={ validateTrigger ?? (fieldRef?.current?.validator ? 'onSubmit' : 'onChange') }
     >
       {fieldProps.onStatusChange ? (
-        <FieldWrapperStatus 
+        <FieldWrapperStatus
           Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
@@ -213,7 +218,7 @@ export default (props: any) => {
   if (inlineSelf) {
     if (noStyle) {
       return (
-        <div 
+        <div
           className={classnames('fr-inline-field', { 'fr-field-visibility': !visible, [schema.className] : !! schema.className })}
         >
           {formItem}
@@ -224,8 +229,8 @@ export default (props: any) => {
   }
 
   return (
-    <Col 
-      span={span} 
+    <Col
+      span={span}
       className={classnames(null, { 'fr-field-visibility': !visible })}
     >
       {formItem}

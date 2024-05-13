@@ -17,9 +17,10 @@ export default (props: any) => {
     upperCtx,
     formCtx,
     configContext,
-    setListData
+    setListData,
+    addons,
   } = props;
- 
+
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
@@ -43,7 +44,7 @@ export default (props: any) => {
   let widgetName = schema.widget || 'cardList';
   const Widget = getWidget(widgetName, widgets);
   const { props: listProps, removeBtn, rules = [], ...otherSchema } = schema;
-  
+
   let {
     addBtnProps,
     delConfirmProps,
@@ -73,7 +74,7 @@ export default (props: any) => {
   if (otherSchema?.min > 0 && listData.length <= otherSchema?.min) {
     hideDelete = true;
   }
- 
+
   if (otherSchema?.max > 0 && otherSchema?.max <= listData.length) {
     hideAdd = true;
   }
@@ -208,6 +209,7 @@ export default (props: any) => {
           <>
             <Widget
               {...otherListProps}
+              addons={addons}
               configContext={configContext}
               form={form}
               schema={otherSchema}

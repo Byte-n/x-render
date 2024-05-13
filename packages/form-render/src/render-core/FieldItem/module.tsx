@@ -97,6 +97,7 @@ export const getPath = (path: any) => {
   return path;
 };
 
+/** filedLabel */
 export const getLabel = (schema: any, displayType: string, widgets: any, addons: any) => {
   const { title, description, descWidget, labelWidget } = schema;
 
@@ -244,7 +245,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
 
 export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath, fieldRef }) => {
   const pathObj = getPathObj({ path, rootPath });
- 
+
   let fieldProps = {
     ...schema.props,
     addons: {

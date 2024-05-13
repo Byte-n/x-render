@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 import { useUnmount } from 'ahooks';
@@ -12,7 +12,7 @@ import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
 
-export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
+export default function withProvider<T> (Element: React.ComponentType<T>, defaultWidgets?: any): React.ComponentType<T> {
   return (props: any) => {
     const {
       configProvider,
@@ -21,14 +21,15 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
       methods,
       form,
       validateMessages,
-      globalProps={},
+      globalProps = {},
       globalConfig = {},
+      ProxyComponent,
       ...otherProps
     } = props;
-  
+
     const storeRef = useRef(createStore());
     const store: any = storeRef.current;
-  
+
     useEffect(() => {
       if (locale === 'en-US') {
         dayjs.locale('en');
@@ -40,27 +41,35 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
     useUnmount(() => {
       form.resetFields();
     });
-  
+
     if (!form) {
       console.warn('Please provide a form instance to FormRender');
       return null;
     }
-  
+
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
+    const ws = useMemo(() => ({ ...defaultWidgets, ...widgets }), [widgets]);
+    const widgetList = useMemo(() => (
+      ProxyComponent ? Object.keys(ws)
+        .reduce((obj, key) => {
+          obj[key] = (ps) => <ProxyComponent opt={ps} Widget={ws[key]} name={key} />;
+          return obj;
+        }, {}) : ws
+    ), [ProxyComponent]);
     const configContext = {
       locale,
-      widgets: { ...defaultWidgets, ...widgets },
+      widgets: widgetList,
       methods,
       form,
       globalProps,
-      globalConfig
+      globalConfig,
     };
-  
-    const langPack: any = { 
+
+    const langPack: any = {
       ...antdLocale,
       'FormRender': locales[locale],
-      ...configProvider?.locale
+      ...configProvider?.locale,
     };
 
     return (
@@ -70,8 +79,8 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
         form={{
           validateMessages: {
             ...formValidateMessages,
-            ...validateMessages
-          }
+            ...validateMessages,
+          },
         }}
       >
         <ConfigContext.Provider value={configContext}>
